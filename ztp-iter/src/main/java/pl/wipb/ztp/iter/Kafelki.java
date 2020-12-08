@@ -2,6 +2,7 @@ package pl.wipb.ztp.iter;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -12,6 +13,7 @@ class Kafelki extends JPanel {
 	private int tilesize;
 	// kafelek podświetlony (myszką)
 	private int hx = -1, hy = -1;
+	Random rand = new Random();
 
 	// inicjalizacja macierzy
 	public Kafelki(int cols, int rows, int tilesize) {
@@ -174,22 +176,23 @@ class Kafelki extends JPanel {
 	// za to pojawi się metoda pobierająca iterator
 	// public Iterator<Tile> iterator( ...
 
-	public pl.wipb.ztp.iter.Iterator<Tile> getHorizontalIterator(int x, int y)
+	public pl.wipb.ztp.iter.Iterator<Tile> getIterator(int x, int y)
 	{
+		int chosenIterator = rand.nextInt(4);
 
-		return new HorizontalIterator(x, y);
-	}
-	public pl.wipb.ztp.iter.Iterator<Tile> getVerticalIterator(int x, int y)
-	{
-		return new VerticalIterator(x, y);
-	}
-	public pl.wipb.ztp.iter.Iterator<Tile> getLeftHorizontalIterator(int x, int y)
-	{
-		return new LeftHorizontalIterator(x, y);
-	}
-	public pl.wipb.ztp.iter.Iterator<Tile> getLeftVerticalIterator(int x, int y)
-	{
-		return new LeftVerticalIterator(x, y);
+		switch(chosenIterator%4)
+		{
+			case 0:
+				return new HorizontalIterator(x, y);
+			case 1:
+				return new VerticalIterator(x, y);
+			case 2:
+				return new LeftHorizontalIterator(x, y);
+			case 3:
+				return new LeftVerticalIterator(x, y);
+		}
+
+		return null;
 	}
 
 }
